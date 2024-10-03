@@ -7,18 +7,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 
-const val EXTRA_KEY = "text size"
-
+const val TEXT_SIZE_KEY = "text size"
 
 class DisplayActivity : AppCompatActivity() {
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            it.data.apply {  }
-    }
+    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val newSize = result.data?.getIntExtra(TEXT_SIZE_KEY, 40)
+            lyricsDisplayTextView.textSize = newSize as Float
+        }
 
     }
-    // TODO Step 1: Launch TextSizeActivity when button clicked to allow selection of text size value
-
     // TODO Step 3: Use returned value for lyricsDisplayTextView text size
 
     private lateinit var lyricsDisplayTextView: TextView
@@ -36,6 +34,5 @@ class DisplayActivity : AppCompatActivity() {
             launcher.launch(intent)
         }
     }
-
 
 }
